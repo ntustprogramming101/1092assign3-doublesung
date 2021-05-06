@@ -54,13 +54,12 @@ int [] col;
 int [] row;
 
 int lifeX, lifeY;
-int lifes = 2;
 
 boolean downPressed, leftPressed, rightPressed = false;
 
 
 // For debug function; DO NOT edit or remove this!
-int playerHealth = 0;
+int playerHealth = 2;
 float cameraOffsetY = 0;
 boolean debugMode = false;
 
@@ -241,16 +240,14 @@ void draw() {
     && groundhogY < cabbageY + CABBAGE_H
     && groundhogY + GROUNDHOG_H > cabbageY){
       cabbageY = - 80;
-      lifes ++;
+      if(playerHealth < 5) playerHealth ++;
     }else{
       image(cabbage, cabbageX, cabbageY);
     }
     
     // Life
-    if(lifes <= LIFE_MAX && lifes > 0 ){
-      for(int i = 0; i < lifes ; i++){
-        image(life, LIFE_X_START + i * LIFE_SPACE, LIFE_Y);
-      }
+    for(int i = 0; i < playerHealth ; i++){
+      image(life, LIFE_X_START + i * LIFE_SPACE, LIFE_Y);
     }
     
     // Soldier
@@ -331,8 +328,8 @@ void draw() {
        && groundhogY < soldierY + SOLDIER_H
        && groundhogY + GROUNDHOG_H > soldierY){
     
-      lifes --;
-      if(lifes < 1){
+      playerHealth --;
+      if(playerHealth == 0){
         gameState = GAME_OVER;
       }
       setup();
@@ -354,7 +351,7 @@ void draw() {
         gameState = GAME_RUN;
         mousePressed = false;
         // Initialize Game
-        lifes = 2;
+        playerHealth = 2;
       }
     }else{
 
